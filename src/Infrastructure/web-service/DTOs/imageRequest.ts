@@ -1,7 +1,12 @@
+import { ApiProperty } from '@nestjs/swagger';
+export class imageRequest {
 
-export interface imageRequest {
+  @ApiProperty()
+  name: string
 
-  name: string,
+  @ApiProperty()
   url: string
 
 }
+
+

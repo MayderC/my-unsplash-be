@@ -1,6 +1,7 @@
+import { IImage } from "src/Application/Entities/Image"
 
 export interface IImageService {
-  save(): Promise<any>
-  getAll(): Promise<any>
-  delete(id: string): Promise<any>
+  save(image: IImage): Promise<IImage>
+  getAll(): Promise<IImage[]>
+  delete(id: string): void
 }
