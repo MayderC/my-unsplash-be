@@ -1,17 +1,26 @@
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
 import { IImage } from "src/Application/Entities/Image";
 import { IImageRepository } from "src/Application/Ports/repositories/ImageRepository";
+import { Image, ImageDocument } from "src/Infrastructure/database/models/images.model";
+
 
 @Injectable()
 export class ImageRepository implements IImageRepository {
-  delete(id: string): void {
-    throw new Error("Method not implemented.");
+
+  constructor(@InjectModel(Image.name) private imageModel: Model<ImageDocument> ){}
+
+  async delete(id: string): Promise<void> {
+    await this.imageModel.findByIdAndDelete(id)
   }
-  getAll(): Promise<IImage> {
-    throw new Error("Method not implemented.");
+
+  async getAll(): Promise<IImage[]> {
+    return await this.imageModel.find()
   }
-  save(image: IImage): Promise<IImage> {
-    throw new Error("Method not implemented.");
+
+  async save(image: IImage): Promise<IImage> {
+    return this.imageModel.create(image)
   }
   
 }

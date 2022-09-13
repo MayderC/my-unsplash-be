@@ -2,28 +2,22 @@
 import { Injectable } from '@nestjs/common';
 import { IImage } from 'src/Application/Entities/Image';
 import { IImageService } from '../../Ports/services/IImageService';
+import { ImageRepository } from './../repositories/ImageRepository';
 
 @Injectable()
 export class ImageService implements IImageService {
 
-  constructor(){}
+  constructor(private imageRepository: ImageRepository){}
 
-  save(image: IImage): Promise<IImage> {
-    return Promise.resolve(image)
+  async save(image: IImage): Promise<IImage> {
+    return await this.imageRepository.save(image)
   }
 
-  getAll(): Promise<IImage[]> {
-
-    return Promise.resolve([
-      {name: "!", url: ""},
-      {name: "!", url: ""},
-      {name: "!", url: ""},
-      {name: "!", url: ""},
-      {name: "!", url: "", id: 1},
-    ])
+ async getAll(): Promise<IImage[]> {
+    return await this.imageRepository.getAll();
   }
 
-  delete(id: string): void{
-    console.log("deleted", id)
+  async delete(id: string): Promise<void>{
+    this.imageRepository.delete(id)
   }
 }

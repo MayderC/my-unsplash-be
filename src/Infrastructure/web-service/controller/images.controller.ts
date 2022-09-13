@@ -2,9 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post }
 import { ImageService } from 'src/Application/Adapters/services/ImageService';
 import { API_PATH } from '../../common/constant/index';
 import { imageRequest } from '../DTOs/imageRequest';
-import {ApiOkResponse} from '@nestjs/swagger'
+import {ApiOkResponse, ApiTags} from '@nestjs/swagger'
 import { imageResponse } from '../DTOs/ImageResponse';
 
+@ApiTags('Image')
 @Controller(API_PATH + '/image')
 export class ImagesController {
 
@@ -36,12 +37,12 @@ export class ImagesController {
     }
   }
 
-  @Delete('/id')
+  @Delete('/:id')
   async delete(@Param('id') id: string){
-    try {
+  try {
       return await this.imageService.delete(id)
     } catch (error) {
-      
+      throw new HttpException('Bad Request', HttpStatus.BAD_REQUEST)
     }
   }
 
