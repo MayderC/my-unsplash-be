@@ -16,7 +16,9 @@ export class ImageRepository implements IImageRepository {
   }
 
   async getAll(): Promise<IImage[]> {
-    return await this.imageModel.find()
+    const query =this.imageModel.find()
+    const result =  await query.sort({createdAt: 'desc'}).exec()
+    return result
   }
 
   async save(image: IImage): Promise<IImage> {

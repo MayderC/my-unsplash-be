@@ -10,7 +10,7 @@ import { ImageRepository } from './Application/Adapters/repositories/ImageReposi
   imports: [
   ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_CONEXION),
-    MongooseModule.forFeature([{name : Image.name, schema : ImageSchema}])
+    MongooseModule.forFeature([{name : Image.name, schema : ImageSchema}]),
 ],
   controllers: [ ImagesController],
   providers: [
