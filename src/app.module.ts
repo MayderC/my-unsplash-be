@@ -1,12 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './Infrastructure/web-service/controller/app.controller';
-import { AppService } from './Application/Adapters/app.service';
 import { ImagesController } from './Infrastructure/web-service/controller/images.controller';
 import { ImageService } from './Application/Adapters/services/ImageService';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { Image, ImageSchema } from './Infrastructure/database/models/images.model';
+import { ImageRepository } from './Application/Adapters/repositories/ImageRepository';
 
 @Module({
-  imports: [],
-  controllers: [AppController, ImagesController],
-  providers: [AppService, ImageService],
+  imports: [
+  ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_CONEXION),
+    MongooseModule.forFeature([{name : Image.name, schema : ImageSchema}]),
+],
+  controllers: [ ImagesController],
+  providers: [
+    ImageService,
+    ImageRepository
+  ],
 })
 export class AppModule {}
